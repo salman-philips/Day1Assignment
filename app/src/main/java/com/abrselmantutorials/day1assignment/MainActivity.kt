@@ -1,16 +1,17 @@
 package com.abrselmantutorials.day1assignment
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     lateinit var button: Button
+    lateinit var callButton: Button
     lateinit var editText: EditText
     lateinit var textView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,15 +20,28 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.button)
         editText = findViewById(R.id.name)
         textView = findViewById(R.id.text)
+        callButton = findViewById(R.id.call)
         button.setOnClickListener {
-            val nameFormEdit: String = editText.text.toString()
-            if (nameFormEdit.isNullOrBlank()) {
-                Toast.makeText(this@MainActivity, "please enter name", Toast.LENGTH_SHORT).show()
-            } else {
-              val intent=Intent(this@MainActivity,HomeActivity::class.java)
-                intent.putExtra("name",nameFormEdit)
-                this@MainActivity.startActivity(intent)
-            }
+            goToHomeActivity()
+        }
+
+        callButton.setOnClickListener {
+            val callIntent = Intent(Intent.ACTION_DIAL)
+            callIntent.data = Uri.parse("tel:9741202116")
+            this@MainActivity.startActivity(callIntent)
+        }
+
+
+    }
+
+    private fun goToHomeActivity() {
+        val nameFormEdit: String = editText.text.toString()
+        if (nameFormEdit.isNullOrBlank()) {
+            Toast.makeText(this@MainActivity, "please enter name", Toast.LENGTH_SHORT).show()
+        } else {
+            val intent = Intent(this@MainActivity, HomeActivity::class.java)
+            intent.putExtra("name", nameFormEdit)
+            this@MainActivity.startActivity(intent)
         }
     }
 }

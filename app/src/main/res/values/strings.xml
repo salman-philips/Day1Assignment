@@ -4,5 +4,6 @@
     <string name="hi_there">Hi there</string>
     <string name="button">Click Me</string>
     <string name="enter_your_name">Enter your name</string>
+    <string name="call">call</string>
 
 </resources>
