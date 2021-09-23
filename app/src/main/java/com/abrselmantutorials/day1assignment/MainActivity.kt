@@ -1,5 +1,6 @@
 package com.abrselmantutorials.day1assignment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -23,7 +24,9 @@ class MainActivity : AppCompatActivity() {
             if (nameFormEdit.isNullOrBlank()) {
                 Toast.makeText(this@MainActivity, "please enter name", Toast.LENGTH_SHORT).show()
             } else {
-                textView.text = nameFormEdit
+              val intent=Intent(this@MainActivity,HomeActivity::class.java)
+                intent.putExtra("name",nameFormEdit)
+                this@MainActivity.startActivity(intent)
             }
         }
     }
