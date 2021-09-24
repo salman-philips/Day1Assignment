@@ -3,6 +3,7 @@ package com.abrselmantutorials.day1assignment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -26,15 +27,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         callButton.setOnClickListener {
-            val callIntent = Intent(Intent.ACTION_DIAL)
-            callIntent.data = Uri.parse("tel:9741202116")
-            this@MainActivity.startActivity(callIntent)
+            createAlarm("hi",11,12)
         }
 
 
     }
 
-    private fun goToHomeActivity() {
+    fun createAlarm(message: String, hour: Int, minutes: Int) {
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, message)
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
+
+        private fun goToHomeActivity() {
         val nameFormEdit: String = editText.text.toString()
         if (nameFormEdit.isNullOrBlank()) {
             Toast.makeText(this@MainActivity, "please enter name", Toast.LENGTH_SHORT).show()
