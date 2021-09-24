@@ -2,8 +2,6 @@
     <string name="app_name">Day 2 Assignment</string>
 
     <string name="hi_there">Hi there</string>
-    <string name="button">Click Me</string>
-    <string name="enter_your_name">Enter your name</string>
-    <string name="call">call</string>
+    <string name="button">Start activity for result</string>
 
 </resources>
