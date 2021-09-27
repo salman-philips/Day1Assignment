@@ -6,13 +6,118 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/name_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="enter your name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.12" />
+
+            <Spinner
+                android:id="@+id/country_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                app:layout_constraintLeft_toLeftOf="@id/name_edit"
+                app:layout_constraintRight_toRightOf="@id/name_edit"
+                app:layout_constraintTop_toBottomOf="@id/name_edit" />
+
+            <RadioGroup
+                android:id="@+id/radio_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                app:layout_constraintLeft_toLeftOf="@id/country_list"
+                app:layout_constraintRight_toRightOf="@id/country_list"
+                app:layout_constraintTop_toBottomOf="@+id/country_list">
+
+                <RadioButton
+                    android:id="@+id/radio_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50sp"
+                    android:checked="false"
+                    android:onClick="onclickOfRadioButton"
+                    android:text="=Male"
+                    android:textSize="30sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50sp"
+                    android:checked="false"
+                    android:onClick="onclickOfRadioButton"
+                    android:text="=Female"
+                    android:textSize="30sp" />
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/hiking_hobby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Hiking"
+                app:layout_constraintLeft_toLeftOf="@id/radio_gender"
+                app:layout_constraintRight_toRightOf="@id/radio_gender"
+                app:layout_constraintTop_toBottomOf="@id/radio_gender" />
+
+            <CheckBox
+                android:id="@+id/programming_hobby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Programming"
+                app:layout_constraintLeft_toLeftOf="@id/hiking_hobby"
+                app:layout_constraintRight_toRightOf="@id/hiking_hobby"
+                app:layout_constraintTop_toBottomOf="@id/hiking_hobby" />
+
+            <CheckBox
+                android:id="@+id/other_hobby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Other"
+                app:layout_constraintLeft_toLeftOf="@id/programming_hobby"
+                app:layout_constraintRight_toRightOf="@id/programming_hobby"
+                app:layout_constraintTop_toBottomOf="@id/programming_hobby" />
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:onClick="showDetails"
+                android:text="Submit"
+                app:layout_constraintLeft_toLeftOf="@+id/other_hobby"
+                app:layout_constraintRight_toRightOf="@+id/other_hobby"
+                app:layout_constraintTop_toBottomOf="@id/other_hobby" />
+
+            <TextView
+                android:id="@+id/details_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:singleLine="false"
+                app:layout_constraintLeft_toLeftOf="@+id/submit_button"
+                app:layout_constraintRight_toRightOf="@id/submit_button"
+                app:layout_constraintTop_toBottomOf="@id/submit_button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
