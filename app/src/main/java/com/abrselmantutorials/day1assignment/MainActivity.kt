@@ -7,20 +7,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+class MainActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
     lateinit var fName: EditText
     lateinit var lName: EditText
     lateinit var lastEntry: TextView
-    lateinit var listView: ListView
+    lateinit var recyclerView: RecyclerView
     lateinit var feedReaderDbHelper: FeedReaderDbHelper
+    lateinit var dataList: ArrayList<Data>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initializeViews()
         initializePreferences()
         feedReaderDbHelper = FeedReaderDbHelper(this)
+        dataList = feedReaderDbHelper.getCursorValues()
     }
 
     private fun initializePreferences() {
@@ -31,8 +35,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         fName = findViewById(R.id.fName)
         lName = findViewById(R.id.lName)
         lastEntry = findViewById(R.id.lastEntry)
-        listView = findViewById(R.id.listView)
-        listView.setOnItemClickListener(this)
+        recyclerView = findViewById(R.id.recyclerView)
     }
 
     override fun onResume() {
@@ -50,12 +53,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             FeedReaderContract.FeedEntry.COLUMN_L_NAME
         )
         val toArray = intArrayOf(android.R.id.text1, android.R.id.text2)
-        val simpleCursorAdapter = SimpleCursorAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_2,
-            feedReaderDbHelper.getCursorValues(), colNames, toArray
-        )
-        listView.adapter = simpleCursorAdapter
+        //get the adapter
+        recyclerView.adapter = RecyAdapter(dataList)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
     }
 
     override fun onPause() {
@@ -80,16 +81,5 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             putString(key, value)
             apply()
         }
-
-    }
-
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val itemClicked = parent?.getItemAtPosition(position) as Cursor
-        val titleIndex: Int =
-            itemClicked.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_F_NAME)
-        val fName: String = itemClicked.getString(titleIndex)
-
-
-        Toast.makeText(this, fName, Toast.LENGTH_SHORT).show()
     }
 }

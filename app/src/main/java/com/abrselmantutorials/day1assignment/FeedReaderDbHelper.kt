@@ -2,7 +2,6 @@ package com.abrselmantutorials.day1assignment
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
@@ -56,8 +55,9 @@ class FeedReaderDbHelper(context: Context) :
         )
     }
 
-    fun getCursorValues(): Cursor {
-        return this.readableDatabase.query(
+    fun getCursorValues(): ArrayList<Data> {
+        val dataList = ArrayList<Data>()
+        val cursor = this.readableDatabase.query(
             FeedReaderContract.FeedEntry.TABLE_NAME,
             null,
             null,
@@ -66,7 +66,17 @@ class FeedReaderDbHelper(context: Context) :
             null,
             null
         )
-
+        if (cursor.moveToFirst()) {
+            do {
+                dataList.add(
+                    Data(
+                        cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_F_NAME)),
+                        cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_L_NAME))
+                    )
+                )
+            } while (cursor.moveToNext())
+        }
+        return dataList
     }
 
     fun putValues(data: Data) {
