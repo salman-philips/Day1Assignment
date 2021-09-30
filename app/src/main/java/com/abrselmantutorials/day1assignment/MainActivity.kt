@@ -2,15 +2,13 @@ package com.abrselmantutorials.day1assignment
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),SwipeListener {
     lateinit var sharedPref: SharedPreferences
     lateinit var fName: EditText
     lateinit var lName: EditText
@@ -54,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         )
         val toArray = intArrayOf(android.R.id.text1, android.R.id.text2)
         //get the adapter
-        recyclerView.adapter = RecyAdapter(dataList)
+        recyclerView.adapter = RecyAdapter(dataList,this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
     }
@@ -81,5 +79,13 @@ class MainActivity : AppCompatActivity() {
             putString(key, value)
             apply()
         }
+    }
+
+    override fun onClick(position: Int) {
+        Toast.makeText(this, "itemClicked on position is $position", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLongClick(position: Int) {
+        Toast.makeText(this, "itemLongClicked on position is $position", Toast.LENGTH_SHORT).show()
     }
 }
