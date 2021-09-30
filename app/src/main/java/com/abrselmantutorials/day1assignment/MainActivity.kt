@@ -1,12 +1,13 @@
 package com.abrselmantutorials.day1assignment
 
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CallLog
+import android.provider.ContactsContract
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
 import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var listView: ListView
@@ -18,10 +19,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun populateWithCallLogs() {
-        val allCalls: Uri = Uri.parse("content://call_log/calls")
-        val cursor: Cursor = managedQuery(allCalls, null, null, null, null)
+        val cursor =
+            contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
 
-        var colNames = arrayOf(CallLog.Calls.NUMBER, CallLog.Calls.DURATION)
+        var colNames = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.NAME_RAW_CONTACT_ID)
         var toArray = intArrayOf(android.R.id.text1, android.R.id.text2)
 
         var adapter = SimpleCursorAdapter(this,
